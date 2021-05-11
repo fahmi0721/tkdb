@@ -20,6 +20,9 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$header['title_page'] = "E-MKP ONLINE PT INTAN SEJAHTEAR UTAMA";
+		// $this->session->set_flashdata("success_login","Username OR Password Incorrect!");
+		$this->load->view('form_login',$header);
+
 	}
 }
