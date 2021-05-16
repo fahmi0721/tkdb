@@ -15,9 +15,11 @@
 <script src="<?= base_url() ?>/public/js/dataTables.bootstrap.min.js"></script>
 <script src="<?= base_url() ?>/public/js/jquery.slimscroll.min.js"></script>
 <script src="<?= base_url() ?>/public/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>/public/js/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="<?= base_url() ?>/public/js/chart/Chart.min.js" type="text/javascript"></script>
-<!-- <script src="lib/select2-bootstrap/dist/select2.full.js"></script> -->
+<script src="<?= base_url() ?>/public/lib/select2-bootstrap/dist/select2.full.js"></script>
 <script src="<?= base_url() ?>/public/js/fastclick.js"></script>
+<script src="<?= base_url() ?>/public/js/jquery.countdown.min.js"></script>
 <script src="<?= base_url() ?>/public/js/pdfobject.min.js"></script>
 <script src="<?= base_url() ?>/public/js/adminlte.min.js"></script>
 <script src="<?= base_url() ?>/public/js/main.js"></script>

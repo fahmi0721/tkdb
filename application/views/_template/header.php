@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="<?= base_url('public/css/dataTables.bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('public/css/datepicker3.css') ?>">
   <link rel="stylesheet" href="<?= base_url('public/css/AdminLTE.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('public/css/bootstrap3-wysihtml5.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('public/css/_all-skins.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('public/css/jquery-ui.min.css') ?>">
-  <!-- <link rel="stylesheet" href="lib/select2-bootstrap/dist/select2.min.css">
-  <link rel="stylesheet" href="lib/select2-bootstrap/dist/select2-bootstrap.min.css"> -->
+  <link rel="stylesheet" href="<?= base_url('public/lib/select2-bootstrap/dist/select2.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('public/lib/select2-bootstrap/dist/select2-bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('public/css/main.css') ?>">
  
   <script src="<?= base_url() ?>/public/js/jquery.min.js"></script>
@@ -21,7 +22,7 @@
   
 </head>
 
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -29,9 +30,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>E-</b>M</span>
+      <span class="logo-mini"><b>TK</b>DB</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>E- </b> MKP</span>
+      <span class="logo-lg"><b>TKDB </b> ONLINE</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -63,7 +64,11 @@
               <li class="user-footer">
                
                 <div class="pull-right">
-                  <a href="<?= base_url('auths/logout') ?>" class="btn btn-danger btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
+                  <?php if($this->session->userdata('Level') == "Admin"){ ?>
+                    <a href="<?= base_url('admins/auths/').$this->session->userdata('Link-Logout') ?>" class="btn btn-danger btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
+                  <?php }else{ ?>
+                    <a href="<?= base_url('auths/').$this->session->userdata('Link-Logout') ?>" class="btn btn-danger btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
+                  <?php } ?>
                 </div>
               </li>
             </ul>
