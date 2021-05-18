@@ -29,11 +29,11 @@
     <?php endif; ?>
     <form action="<?= base_url("auths/proses") ?>" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" autocomplete=off name="Username" placeholder="Username" required>
+        <input type="text" class="form-control" autocomplete=off name="Username" data-toggle='tooltip' title='masukkan No KTP anda ' placeholder="No KTP" required>
         <span class="fa fa-user form-control-feedback" ></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" autocomplete=off name="Password" placeholder="Password" required>
+        <input type="password" class="form-control" data-toggle='tooltip' title='masukkan dengan format (DDMMYY) Contoh (301195) [30 September 1995] ' autocomplete=off name="Password" placeholder="Password" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
 
@@ -43,7 +43,7 @@
       </div>
       <hr>
       <div class="form-group">
-        <p class='text-muted'>Jika ada kendala dalam melakukan login sistem hubungi kami <a href="#" class='btn btn-success btn-xs'>Disini</a></p>
+        <p class='text-muted'>Jika ada kendala dalam melakukan login sistem hubungi kami <a href="<?= base_url("faq/") ?>" class='btn btn-success btn-xs'>Disini</a></p>
         <span class="clearfix"></span>
       </div>
 
@@ -60,6 +60,10 @@
 <script src="<?= base_url() ?>/public/js/jquery.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<?= base_url() ?>/public/js/bootstrap.min.js"></script>
-
+<script>
+    $(document).ready(function(){
+      $("[data-toggle='tooltip']").tooltip();
+    })
+</script>
 </body>
 </html>

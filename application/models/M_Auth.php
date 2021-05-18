@@ -1,7 +1,13 @@
 <?php
-
+date_default_timezone_set('Asia/Makassar');
 class M_Auth extends CI_Model {
-        
+
+        function __construct(){
+            parent::__construct();
+            $this->load->library('Mylib');
+            
+        }    
+
         function proses_login($data){
             $this->db->select("Username,Id,Passwords,Nama");
             $this->db->where('Username', $data['Username']);
@@ -64,6 +70,29 @@ class M_Auth extends CI_Model {
         function cek_login_member(){
             if(empty($this->session->userdata('is_login'))){
                 redirect('auths');
+            }
+        }
+
+        function cek_jadwal($Noktp){
+            $this->db->where('Noktp', $Noktp);
+            $query = $this->db->get("tb_jadwal");
+            $row = $query->num_rows();
+            if($row > 0){
+                $TglNow = date("Y-m-d");
+                $dt = $query->row();
+                if($TglNow == $dt->Dari){
+                    $rs['pesan'] = "";
+                    $rs['status'] = TRUE;
+                    return $rs;
+                }else{
+                    $rs['pesan'] = "Anda telah di jadwalkan pada <b>".$this->mylib->tgl_indo($dt->Dari)."</b>";
+                    $rs['status'] = FALSE;
+                    return $rs;
+                }
+            }else{
+                $rs['pesan'] = "Anda belum di jadwalkan!";
+                $rs['status'] = FALSE;
+                return $rs;
             }
         }
 

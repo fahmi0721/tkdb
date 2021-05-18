@@ -35,15 +35,22 @@ class Auths extends CI_Controller {
 		$data['Password'] = md5($this->input->post("Password"));	
 		$result = $this->m->proses_login_peserta($data);
 		if($result['status'] === TRUE){
-			$this->session->set_userdata('Nama',$result['data']['user']->Nama);
-			$this->session->set_userdata('Jabatan',$result['data']['user']->Jabatan);
-			$this->session->set_userdata('NomorPeserta',$result['data']['user']->NomorPeserta);
-			$this->session->set_userdata('UnitKerja',$result['data']['user']->UnitKerja);
-			$this->session->set_userdata('Noktp',$result['data']['user']->Noktp);
-			$this->session->set_userdata('Level',"Peserta");
-			$this->session->set_userdata('Link-Logout',"logout_member");
-			$this->session->set_userdata('is_login',TRUE);
-			redirect("home");
+			$cekJadwalUjian = $this->m->cek_jadwal($data['Noktp']);
+			if($cekJadwalUjian['status'] === TRUE){
+				$this->session->set_userdata('Nama',$result['data']['user']->Nama);
+				$this->session->set_userdata('Jabatan',$result['data']['user']->Jabatan);
+				$this->session->set_userdata('NomorPeserta',$result['data']['user']->NomorPeserta);
+				$this->session->set_userdata('UnitKerja',$result['data']['user']->UnitKerja);
+				$this->session->set_userdata('Noktp',$result['data']['user']->Noktp);
+				$this->session->set_userdata('Level',"Peserta");
+				$this->session->set_userdata('Link-Logout',"logout_member");
+				$this->session->set_userdata('is_login',TRUE);
+				redirect("home");
+			}else{
+				$header['title_page'] = "Login Invalid";
+				$this->session->set_flashdata("success_login",$cekJadwalUjian['pesan']);
+				$this->load->view('form_login',$header);
+			}
 
 		}else{
 			$header['title_page'] = "Login Invalid";

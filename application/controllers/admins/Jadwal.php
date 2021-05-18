@@ -137,7 +137,7 @@ class Jadwal extends CI_Controller {
 			}
 		}
 
-		$success = array("status" => TRUE, "pesan" => "Data Jadwal Peserta berhasil tersimpan");
+		$success = array("status" => true, "pesan" => "Data Jadwal Peserta berhasil tersimpan");
 		echo json_encode($success);
 		
 	}

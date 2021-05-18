@@ -75,6 +75,7 @@
                     <h4>SELAMAT DATANG <i><?= $data->Nama ?></i> </h4>
                     <p>Pada hari ini <?= $jadwal->Hari ?>, <?= $jadwal->Today ?> akan dilaksanakan Tes Kompetensi Dasar Berfikir(TKDB) untuk anda. Dalam tes ini anda diberikan waktu 60 menit untuk menjawab 60 butir soal, waktu akan berjalan ketika anda klik tombol <b class='btn btn-xs btn-primary btn-flat'><i class='fa fa-check'></i> Mulai Tes</b> yang ada di kiri </p>
                     <p>Untuk menjadi perhatian khusus selama proses menjawab soal berlangsung dimohon untuk tidak meninggalkan halaman ini, dikarenakan waktu akan trus berjalan.</p>
+                    <p>Jangan lupa menekan tombol <b class='btn btn-xs btn-success btn-flat'><i class='fa fa-check'></i> Selesai</b> jika anda telah menjawab semua soal telah terjawab. Tombol selesai akan muncul setelah semua soal terjawab</p>
                 </div>
             <?php elseif($tkdb->StatusUjian == "1"): 
                 $NoSoal = isset($_GET['Id']) ? sprintf("%02d",$_GET['Id']) : "01";
@@ -156,6 +157,7 @@
 
                             </div>
                         </div>
+                        
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -178,6 +180,7 @@
         $('#clock').countdown(waktu_ujian, function(event) {
             var menit = event.offset.minutes;
             var detik = event.offset.seconds;
+            var jam = event.offset.hours;
             if(menit <= 30 && menit > 10){
                 $("#clock").removeClass("label-success");
                 $("#clock").removeClass("label-danger");
@@ -188,7 +191,7 @@
                 $("#clock").addClass("label-danger");
             }
 
-            if(detik < 1){
+            if(jam < 1 && menit < 1 && detik < 1){
                 SelesaiPaksa();
             }
             $(this).html(event.strftime('%H:%M:%S'));

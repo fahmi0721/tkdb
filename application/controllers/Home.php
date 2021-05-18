@@ -4,10 +4,10 @@ date_default_timezone_set('Asia/Makassar');
 class Home extends CI_Controller {
     function __construct(){
 		parent::__construct();
-		// $this->load->model('M_Auth',"login");
+		$this->load->model('M_Auth',"login");
 		$this->load->model('M_Home',"m");
 		$this->load->library('Mylib');
-        // $this->login->cek_login_member();
+        $this->login->cek_login_member();
 		
 	}
 
@@ -82,7 +82,7 @@ class Home extends CI_Controller {
 		/** SET TIME INTERVAL */
 		
 		$dates = date_create($WaktuSekarang);
-		date_add($dates, date_interval_create_from_date_string('1 minutes'));
+		date_add($dates, date_interval_create_from_date_string('1 hours'));
 		$dates = date_format($dates, 'Y/m/d H:i:s');
 		$this->session->set_userdata("waktu_ujian",$dates);
 		$success = array("status" => TRUE, "pesan" => $this->session->userdata("waktu_ujian"));

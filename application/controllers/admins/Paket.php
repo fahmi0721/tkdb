@@ -23,7 +23,7 @@ class Paket extends CI_Controller {
             $row[] = $no;
             $row[] = $field->Kode;
             $row[] = $field->Nama;
-            $row[] = "<center><span class='btn-group'><a data-toggle='tooltip' href='".base_url()."admins/paket/edit?Id=".$field->Id."' title='Ubah Data' class='btn btn-primary btn-xs'><i class='fa fa-edit'></i></a><a data-toggle='tooltip' href='javascript:void(0)' title='Hapus Data' onclick='HapusData(".$field->Id.")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a></span></center>";
+            $row[] = "<center><a data-toggle='tooltip' href='".base_url()."admins/paket/edit?Id=".$field->Id."' title='Ubah Data' class='btn btn-primary btn-xs'><i class='fa fa-edit'></i></a><a data-toggle='tooltip' href='javascript:void(0)' title='Hapus Data' onclick='HapusData(".$field->Id.")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a></span></center>";
             $data[] = $row;
         }
  
