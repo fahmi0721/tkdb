@@ -71,4 +71,26 @@ class M_Home extends CI_Model {
     }
 
 
+
+
+    //** FORM ADMIN */
+    function load_count_tkdb_waiting(){
+        $this->db->where("StatusUjian","0");
+        return $this->db->get("tb_tkdb")->num_rows();
+    }
+
+    function load_count_tkdb_progress(){
+        $this->db->where("StatusUjian","1");
+        return $this->db->get("tb_tkdb")->num_rows();
+    }
+
+    function load_count_tkdb_finish(){
+        $this->db->where("StatusUjian","2");
+        return $this->db->get("tb_tkdb")->num_rows();
+    }
+
+    function load_count_all(){
+        return $this->db->get("tb_tkdb")->num_rows();
+    }
+
 }

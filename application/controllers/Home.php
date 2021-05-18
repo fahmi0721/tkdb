@@ -108,6 +108,7 @@ class Home extends CI_Controller {
 		$tkdb['StatusUjian'] = "2";
 		$this->m->update_tkdb($Noktp, $tkdb);
 		$success = array("status" => TRUE, "pesan" => "Tes Selesai");
+		$this->session->unset_userdata("waktu_ujian");
         echo json_encode($success);
 	}
 
