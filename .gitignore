@@ -13,6 +13,8 @@ composer.lock
 
 application/config/database.php
 application/config/config.php
+public/img/ktp/*
+public/img/soal/*
 
 
 user_guide_src/build/*
