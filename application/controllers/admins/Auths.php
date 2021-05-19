@@ -47,7 +47,7 @@ class Auths extends CI_Controller {
 		}else{
 			$header['title_page'] = "Login Invalid";
 			$this->session->set_flashdata("success_login",$result['pesan']);
-			$this->load->view('form_login',$header);
+			$this->load->view('admins/form_login',$header);
 		}
 	}
 }
