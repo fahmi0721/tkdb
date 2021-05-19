@@ -3,7 +3,7 @@
 class M_Pesrta_selesai_tes extends CI_Model {
     var $table = 'tb_tkdb'; //nama tabel dari database
     var $column_order = array(null,'NoKtp','Peserta'); //field yang ada di table peserta
-    var $column_search = array('Nama','Peserta'); //field yang diizin untuk pencarian 
+    var $column_search = array('Noktp','Peserta'); //field yang diizin untuk pencarian 
     var $order = array('Id' => 'asc'); // default order 
  
 

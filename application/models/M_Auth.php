@@ -80,9 +80,9 @@ class M_Auth extends CI_Model {
             if($row > 0){
                 $TglNow = date("Y-m-d");
                 $dt = $query->row();
-                if($TglNow == $dt->Dari){
+                if($TglNow >= $dt->Dari && $TglNow < $dt->Sampai){
                     $rs['pesan'] = "";
-                    $rs['status'] = TRUE;
+                    $rs['status'] = TRUE;   
                     return $rs;
                 }else{
                     $rs['pesan'] = "Anda telah di jadwalkan pada <b>".$this->mylib->tgl_indo($dt->Dari)."</b>";

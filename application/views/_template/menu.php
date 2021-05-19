@@ -23,6 +23,7 @@
     </li>
     <li <?php if($cekA == "jadwal"){ echo "class='active'"; } ?>><a href='<?= base_url('admins/jadwal') ?>'><i class='fa fa-clock-o'></i> <span>Jadwal TKDB</span></a></li>
     <li <?php if($cekA == "data"){ echo "class='active'"; } ?>><a href='<?= base_url('faq/data') ?>'><i class='fa fa-book'></i> <span>FAQ</span></a></li>
+    <li <?php if($cekA == "nilai"){ echo "class='active'"; } ?>><a href='<?= base_url('admins/nilai') ?>'><i class='fa fa-tags'></i> <span>Nilai</span></a></li>
     <?php } ?>
 </ul>
 

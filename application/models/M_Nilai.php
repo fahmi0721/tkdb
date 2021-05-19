@@ -1,19 +1,20 @@
 <?php
 
-class M_Pesrta_berlangsung_tes extends CI_Model {
+class M_Nilai extends CI_Model {
+
     var $table = 'tb_tkdb'; //nama tabel dari database
     var $column_order = array(null,'NoKtp','Peserta'); //field yang ada di table peserta
-    var $column_search = array('Noktp','Peserta'); //field yang diizin untuk pencarian 
+    var $column_search = array('Peserta'); //field yang diizin untuk pencarian 
     var $order = array('Id' => 'asc'); // default order 
  
 
     private function _get_datatables_query()
     {
-        $this->db->where("StatusUjian", '1');
+        $this->db->where("StatusUjian","2");
         $this->db->from($this->table);
  
         $i = 0;
-     
+        
         foreach ($this->column_search as $item) // looping awal
         {
             if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
@@ -64,9 +65,29 @@ class M_Pesrta_berlangsung_tes extends CI_Model {
 
     public function count_all()
     {
-        $this->db->where("StatusUJian", "1");
+        $this->db->where("StatusUjian","2");
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
+    public function get_kode_paket($Noktp){
+        $this->db->where("Noktp",$Noktp);
+        $res = $this->db->get("tb_tkdb")->row();
+        return $res->KodePaket;
+    }
+    
+    function get_jawaban_peserta($Noktp, $KodePaket){
+        $this->db->where("Noktp",$Noktp);
+        $this->db->where("KodePaket",$KodePaket);
+        return $this->db->get("tb_jawaban")->result();
+    }
+
+    function get_nilai($KodeSoal,$Jawaban){
+        $Jawaban = base64_encode($Jawaban);
+        $this->db->where("Kode",$KodeSoal);
+        $this->db->where("KunciJawaban",$Jawaban);
+        $res = $this->db->get("tb_soal")->row();
+        return !empty($res->Bobot) ? $res->Bobot : 0;
+    }
+    
 }
