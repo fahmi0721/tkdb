@@ -89,5 +89,53 @@ class M_Nilai extends CI_Model {
         $res = $this->db->get("tb_soal")->row();
         return !empty($res->Bobot) ? $res->Bobot : 0;
     }
+
+    function get_unit_kerja(){
+        $UnitKerja = array("PELINDO IV (PERSERO) KANTOR PUSAT","PELINDO IV (PERSERO) CABANG MAKASSAR","PELINDO IV (PERSERO) TERMINAL PETIKEMAS MAKASSAR","PELINDO IV( PERSERO) CABANG MAKASSAR NEW PORT","PELINDO IV (PERSERO) TERMINAL PETIKEMAS BITUNG","PELINDO IV( PERSERO) CABANG BALIKPAPAN","PELINDO IV( PERSERO) CABANG SAMARINDA","PELINDO IV( PERSERO) CABANG BITUNG","PELINDO IV( PERSERO) CABANG AMBON","PELINDO IV( PERSERO) CABANG SORONG","PELINDO IV( PERSERO) CABANG JAYAPURA","PELINDO IV( PERSERO) CABANG TARAKAN","PELINDO IV( PERSERO) CABANG TERNATE","PELINDO IV( PERSERO) CABANG KENDARI","PELINDO IV( PERSERO) CABANG PANTOLOAN","PELINDO IV( PERSERO) CABANG PARE-PARE","PELINDO IV( PERSERO) CABANG NUNUKAN","PELINDO IV( PERSERO) CABANG MANOKWARI","PELINDO IV( PERSERO) CABANG BIAK","PELINDO IV( PERSERO) CABANG MERAUKE","PELINDO IV( PERSERO) CABANG TOLI-TOLI","PELINDO IV( PERSERO) CABANG FAKFAK","PELINDO IV( PERSERO) CABANG GORONGTALO","PELINDO IV( PERSERO) CABANG MANADO","PELINDO IV( PERSERO) CABANG BONTANG","PELINDO IV( PERSERO) CABANG SANGATTA","PELINDO IV( PERSERO) CABANG TANJUNG REDEB");
+        ksort($UnitKerja);
+        return $UnitKerja;
+    }
+
+    function load_peserta_ujian_selesai($UnitKerja){
+        $this->db->select("tb_tkdb.Noktp, tb_peserta.Nama,tb_tkdb.KodePaket");
+        $this->db->from("tb_tkdb");
+        $this->db->join("tb_peserta","tb_tkdb.Noktp = tb_peserta.Noktp");
+        $this->db->where("tb_tkdb.StatusUjian","2");
+        $this->db->where("tb_tkdb.Nilai IS NULL");
+        $this->db->where("tb_peserta.UnitKerja",$UnitKerja);
+        $this->db->limit(50);
+        return $this->db->get()->result_array();
+    }
+
+    function update_nilai_peserta($data,$NoKtp){
+        $this->db->where("Noktp", $NoKtp);
+        $this->db->update("tb_tkdb", $data);
+        return $this->db->affected_rows();
+    }
+
+    function get_peserta_tkdb(){
+        $this->db->select("tb_peserta.Noktp, tb_peserta.Nama, tb_tkdb.KodePaket");
+        $this->db->from("tb_tkdb");
+        $this->db->join("tb_peserta","tb_tkdb.Noktp = tb_peserta.Noktp");
+        $this->db->where("tb_tkdb.StatusUjian","2");
+        return $this->db->get()->result_array();
+    }
+
+    function load_soal_cek($KodePaket){
+        $this->db->select("Kode, KunciJawaban, Bobot,KodePaket");
+        $this->db->where("KodePaket",$KodePaket);
+        return $this->db->get("tb_soal")->result_array();
+    }
+
+    function get_jawaban_peserta_ubah($Noktp, $KodePaket){
+        $this->db->where("Noktp",$Noktp);
+        $this->db->where("KodePaket",$KodePaket);
+        $dt = $this->db->get("tb_jawaban")->result();
+        $iData = array();
+        foreach($dt as $data){
+            $iData[$data->KodeSoal] = $data;
+        }
+        return $iData;
+    }
     
 }

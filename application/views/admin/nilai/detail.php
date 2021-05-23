@@ -1,11 +1,12 @@
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Detail Nilai TKDB</h3>
-        <!-- <div class='pull-right box-tools'>
+        <div class='pull-right box-tools'>
             <div class='btn-group' id='BtnControl'>
-                <a href='<?= base_url('admins/paket/form-tambah') ?>' class='btn btn-sm btn-primary' title='Tambah data' data-toggle='tooltip'><i class='fa fa-plus'></i> Tambah</a>
+                <a href='<?= base_url('admins/nilai/form-nilai') ?>' class='btn btn-sm btn-success' title='Cek Nilai' data-toggle='tooltip'><i class='fa fa-cog'></i> Cek Nilai</a>
+                <a href='<?= base_url('admins/nilai/form-tambah') ?>' class='btn btn-sm btn-primary' title='Generate Nilai' data-toggle='tooltip'><i class='fa fa-cog'></i> Generate Nilai</a>
             </div>
-        </div> -->
+        </div>
     </div>
     
     <div class="box-body">
@@ -62,7 +63,7 @@
             
             "columnDefs": [
             { 
-                "targets": [ 0,3], 
+                "targets": [ 0,3,4], 
                 "orderable": false, 
             },
             ],

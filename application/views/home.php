@@ -1,3 +1,7 @@
+<?php 
+
+    
+?>
 <div class="row">
         <div class="col-md-3">
           <!-- Profile Image -->
@@ -175,7 +179,7 @@
 <script>
     $(document).ready(function(){
 
-        <?php if($jawaban > 0): ?>
+        <?php if($tkdb->StatusUjian != "0" ): ?>
         var waktu_ujian = "<?= $this->session->userdata("waktu_ujian"); ?>";
         $('#clock').countdown(waktu_ujian, function(event) {
             var menit = event.offset.minutes;

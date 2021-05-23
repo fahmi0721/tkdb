@@ -69,50 +69,77 @@ class Nilai extends CI_Controller {
 		}else{
 			$Hasil = "TIDAK DISARANKAN";
 		}
-
 		$iRes['Hasil'] = $Hasil;
 		echo json_encode($iRes);
 	}
 
-	// public function edit()
-	// {
-	// 	$Id = $this->input->get('Id');
-	// 	$data['data'] = $this->m->detail_data($Id);
-	// 	$header['title_page'] = "TKDB Online | Ubah Paket Soal";
-	// 	$this->load->view('_template/header',$header);
-	// 	$this->load->view('admin/paket/form-edit',$data);
-    //     $this->load->view('_template/footer');
+	public function form_tambah()
+	{
+		$data['UnitKerja'] = $this->m->get_unit_kerja();
+		$header['title_page'] = "TKDB Online | Generate Nilai";
+		$this->load->view('_template/header',$header);
+		$this->load->view('admin/nilai/form-tambah',$data);
+        $this->load->view('_template/footer');
+	}
 
-	// }
+	function hitung_nilai($Noktp,$KodePaket){
+		$iData = array();
+		$iResult = array();
+		$getJawabanPeserta = $this->m->get_jawaban_peserta($Noktp,$KodePaket);
+		foreach($getJawabanPeserta as $jawaban_peserta){
+			$nilai = $this->m->get_nilai($jawaban_peserta->KodeSoal,$jawaban_peserta->Jawaban);
+			$iResult['Nilai'][] = $nilai;
+		}
+		// $Total
+		$Total = array_sum($iResult['Nilai']);
+		$iRes['Nilai'] = $Total;
+		if($Total > 90){
+			$Hasil = "DISARANKAN";
+		}elseif($Total >= 45 && $Total <= 89){
+			$Hasil = "DIPERTIMBANGKAN";
+		}else{
+			$Hasil = "TIDAK DISARANKAN";
+		}
+		$iRes['Keterangan'] = $Hasil;
+		return $iRes;
+	}
 
-	// public function form_tambah()
-	// {
-	// 	$header['title_page'] = "TKDB Online | Tambah Paket Soal";
-	// 	$this->load->view('_template/header',$header);
-	// 	$this->load->view('admin/paket/form-tambah');
-    //     $this->load->view('_template/footer');
-	// }
 
+	public function tambah(){
+		$UnitKerja = $this->input->post('UnitKerja');
+		$LoadPsertaUjainSelesai = $this->m->load_peserta_ujian_selesai($UnitKerja);
+		if(count($LoadPsertaUjainSelesai) > 0){
+			$i=0;
+			foreach($LoadPsertaUjainSelesai as $data){
+				$iData = $this->hitung_nilai($data['Noktp'],$data['KodePaket']);
+				$this->m->update_nilai_peserta($iData,$data['Noktp']);
+				$i++;
+			}
+			$success = array("status" => TRUE, "pesan" => $i." peserta berhasil digenerate nilainya");
+			echo json_encode($success);
+		}else{
+			$success = array("status" => FALSE, "pesan" => "Semua Nilai telah digenerate");
+			echo json_encode($success);
+		}
+		
+	}
 
-	// public function tambah(){
-	// 	$data['Kode'] = $this->input->post('Kode');
-	// 	$data['Nama'] = strtoupper($this->input->post('Nama'));
-	// 	$data['TglCreate'] = date("Y-m-d H:i:s");
-	// 	try{
-	// 		if($this->m->cek_data_by_kode($this->input->post('Kode')) <= 0){
-	// 			$execute = $this->m->save_data($data);
-	// 			$success = array("status" => TRUE, "pesan" => "Data Paket Soal berhasil tersimpan");
-	// 			echo json_encode($success);
-	// 		}else{
-	// 			$error = array("status" => FALSE, "pesan" => "data dengan Kode ".$this->input->post('Kode')." telah terdaftar");
-	// 			echo json_encode($error);
-	// 		}
-			
-	// 	}catch(Exception $e){
-	// 		$error = array("status" => FALSE, "pesan" => $e->getMessage());
-	// 		echo json_encode($error);
-	// 	}
-	// }
+	public function form_nilai()
+	{
+		$data['Peserta'] = $this->m->get_peserta_tkdb();
+		$header['title_page'] = "TKDB Online | Cek Nilai";
+		$this->load->view('_template/header',$header);
+		$this->load->view('admin/nilai/form-nilai',$data);
+        $this->load->view('_template/footer');
+	}
+	
+	public function detail_jawaban(){
+		$Noktp = $this->input->post("Noktp");
+		$getKodePaket = $this->m->get_kode_paket($Noktp);
+		$data['Soal'] = $this->m->load_soal_cek($getKodePaket);
+		$data['Jawaban'] = $this->m->get_jawaban_peserta_ubah($Noktp,$getKodePaket);
+		echo json_encode($data);
+	}	
 
 
 	// public function ubah(){
